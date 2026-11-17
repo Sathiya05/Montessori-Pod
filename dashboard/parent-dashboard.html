@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parent Dashboard | Little Roots Montessori</title>
+  <meta name="description" content="Parent dashboard demo for viewing child progress, learning logs, reports, attendance, tuition, and notifications." />
+  <link rel="icon" type="image/svg+xml" href="../images/logo/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>(function(){try{var t=localStorage.getItem('lr-theme');var d=t||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');if(d==='dark')document.documentElement.classList.add('dark');document.documentElement.style.colorScheme=d;var dir=localStorage.getItem('lr-dir')||'ltr';document.documentElement.dir=dir;document.documentElement.lang=dir==='rtl'?'ar':'en';}catch(e){}})();</script>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-bg font-body text-body antialiased dark:bg-dark-bg dark:text-dark-text">
+  <!-- Dashboard top bar -->
+  <header class="fixed inset-x-0 top-0 z-30 border-b border-border/70 bg-bg/95 backdrop-blur supports-[backdrop-filter]:bg-bg/80 dark:border-white/10 dark:bg-dark-bg/95">
+    <div class="flex h-16 items-center justify-between gap-3 px-4 sm:px-6">
+      <a href="../index.html" class="flex items-center gap-3">
+        <img src="../images/logo/logo.svg" alt="Little Roots Montessori logo" class="h-10 w-10 rounded-xl" />
+        <span class="leading-tight">
+          <span class="block font-heading text-xl text-heading dark:text-dark-text">Montessori Pod</span>
+          <span class="block text-xs text-body dark:text-dark-muted">Growing Curious Minds</span>
+        </span>
+      </a>
+
+      <div class="flex items-center gap-2">
+        <div class="hidden items-center gap-2 xl:flex">
+        <button data-dash-theme class="rounded-full border border-border p-2 text-heading hover:bg-surface dark:border-white/10 dark:text-dark-text dark:hover:bg-dark-surface" aria-label="Toggle theme"><i data-theme-icon data-lucide="sun" class="h-5 w-5"></i></button>
+        <button data-dash-rtl class="rounded-full border border-border p-2 text-heading hover:bg-surface dark:border-white/10 dark:text-dark-text dark:hover:bg-dark-surface" aria-label="Toggle direction"><i data-dir-icon data-lucide="arrow-left-right" class="h-5 w-5"></i></button>
+        <div class="relative">
+          <button data-profile-toggle class="flex items-center gap-2 rounded-full border border-border pe-3 ps-1.5 py-1.5 hover:bg-surface dark:border-white/10 dark:hover:bg-dark-surface" aria-expanded="false" aria-haspopup="true" aria-label="Open profile menu">
+            <span data-profile-initials class="grid h-8 w-8 place-items-center rounded-full bg-primary/15 text-xs font-bold text-primary">AP</span>
+            <span class="hidden text-start leading-tight xl:block">
+              <span data-profile-name class="block text-sm font-semibold text-heading dark:text-dark-text">Parent</span>
+              <span data-profile-role class="block text-[11px] text-body dark:text-dark-muted">Parent</span>
+            </span>
+            <i data-lucide="chevron-down" class="h-4 w-4 text-body/70"></i>
+          </button>
+          <div data-profile-panel class="absolute end-0 mt-2 hidden w-64 rounded-2xl border border-border bg-white p-2 shadow-soft dark:border-white/10 dark:bg-dark-card">
+            <div class="rounded-xl bg-surface/70 p-3 dark:bg-dark-surface">
+              <p data-profile-name class="text-sm font-semibold text-heading dark:text-dark-text">Parent</p>
+              <p data-profile-email class="truncate text-xs">parent@littleroots.demo</p>
+            </div>
+            <a href="#settings" data-dash-goto="#settings" class="mt-1 block rounded-lg px-3 py-2 text-sm hover:bg-surface dark:hover:bg-dark-surface">Account settings</a>
+            <a href="../index.html" class="block rounded-lg px-3 py-2 text-sm hover:bg-surface dark:hover:bg-dark-surface">Back to website</a>
+            <button type="button" data-dash-logout class="mt-1 flex w-full items-center gap-2 rounded-lg px-3 py-2 text-start text-sm text-red-700 hover:bg-red-50 dark:text-red-300 dark:hover:bg-red-500/10"><i data-lucide="log-out" class="h-4 w-4"></i>Logout</button>
+          </div>
+        </div>
+        </div>
+
+        <button data-dash-open class="inline-flex items-center justify-center rounded-xl border border-border p-2 text-heading xl:hidden dark:border-white/10 dark:text-dark-text" aria-label="Open dashboard menu" aria-controls="parent-sidebar" aria-expanded="false">
+          <i data-lucide="menu" class="h-5 w-5"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile drawer -->
+  <div data-dash-overlay class="fixed inset-0 z-40 hidden bg-black/40 xl:hidden"></div>
+  <aside id="parent-sidebar" data-dash-sidebar class="fixed inset-y-0 start-0 z-50 w-72 max-w-[85vw] -translate-x-full overflow-y-auto border-e border-border bg-white p-4 transition-transform duration-300 dark:border-white/10 dark:bg-dark-card rtl:translate-x-full xl:top-16 xl:z-20 xl:w-72 xl:translate-x-0 xl:rounded-none xl:border-e xl:rtl:translate-x-0" aria-label="Parent dashboard sidebar">
+    <div class="flex items-center justify-between xl:hidden">
+      <a href="../index.html" class="flex items-center gap-2">
+        <img src="../images/logo/logo.svg" alt="Little Roots Montessori logo" class="h-10 w-10 rounded-xl" />
+        <span class="leading-tight">
+          <span class="block font-heading text-xl text-heading dark:text-dark-text">Montessori Pod</span>
+          <span class="block text-xs text-body dark:text-dark-muted">Growing Curious Minds</span>
+        </span>
+      </a>
+      <button data-dash-close class="rounded-lg p-2 hover:bg-surface dark:hover:bg-dark-surface" aria-label="Close menu"><i data-lucide="x" class="h-5 w-5"></i></button>
+    </div>
+
+    <div class="mt-5 rounded-xl bg-surface p-3 dark:bg-dark-surface">
+      <div class="text-xs uppercase tracking-wide text-primary">Signed in as</div>
+      <div id="session-name" class="font-semibold text-heading dark:text-dark-text">Parent</div>
+      <div data-profile-email class="mt-0.5 truncate text-xs">parent@littleroots.demo</div>
+    </div>
+
+    <nav class="mt-4 space-y-1 text-sm" id="parent-nav">
+      <a href="#overview" class="dash-link flex items-center gap-2 rounded-xl px-3 py-2 hover:bg-surface dark:hover:bg-dark-surface"><i data-lucide="layout-dashboard" class="h-4 w-4"></i>Overview</a>
+      <a href="#child" class="dash-link flex items-center gap-2 rounded-xl px-3 py-2 hover:bg-surface dark:hover:bg-dark-surface"><i data-lucide="user-round" class="h-4 w-4"></i>My Child</a>
+      <a href="#logs" class="dash-link flex items-center gap-2 rounded-xl px-3 py-2 hover:bg-surface dark:hover:bg-dark-surface"><i data-lucide="notebook-text" class="h-4 w-4"></i>Daily Learning Logs</a>
+      <a href="#reports" class="dash-link flex items-center gap-2 rounded-xl px-3 py-2 hover:bg-surface dark:hover:bg-dark-surface"><i data-lucide="file-text" class="h-4 w-4"></i>Teacher Reports</a>
+      <a href="#attendance" class="dash-link flex items-center gap-2 rounded-xl px-3 py-2 hover:bg-surface dark:hover:bg-dark-surface"><i data-lucide="calendar-check" class="h-4 w-4"></i>Attendance</a>
+      <a href="#tuition" class="dash-link flex items-center gap-2 rounded-xl px-3 py-2 hover:bg-surface dark:hover:bg-dark-surface"><i data-lucide="wallet" class="h-4 w-4"></i>Tuition &amp; Payments</a>
+      <a href="#notifications" class="dash-link flex items-center gap-2 rounded-xl px-3 py-2 hover:bg-surface dark:hover:bg-dark-surface"><i data-lucide="bell" class="h-4 w-4"></i>Notifications</a>
+      <a href="#settings" class="dash-link flex items-center gap-2 rounded-xl px-3 py-2 hover:bg-surface dark:hover:bg-dark-surface"><i data-lucide="settings" class="h-4 w-4"></i>Settings</a>
+      <button type="button" data-dash-logout class="mt-2 flex w-full items-center gap-2 rounded-xl px-3 py-2 text-start text-red-700 hover:bg-red-50 dark:text-red-300 dark:hover:bg-red-500/10"><i data-lucide="log-out" class="h-4 w-4"></i>Logout</button>
+    </nav>
+
+    <div class="mt-5 space-y-3 border-t border-border pt-4 dark:border-white/10 xl:hidden">
+      <p class="px-1 text-xs font-semibold uppercase tracking-wide text-body/70 dark:text-dark-muted">Quick settings</p>
+      <div class="grid grid-cols-2 gap-2">
+        <button data-dash-theme class="flex items-center justify-center gap-2 rounded-xl border border-border px-3 py-2 text-sm hover:bg-surface dark:border-white/10 dark:hover:bg-dark-surface"><i data-theme-icon data-lucide="sun" class="h-4 w-4"></i>Theme</button>
+        <button data-dash-rtl class="flex items-center justify-center gap-2 rounded-xl border border-border px-3 py-2 text-sm hover:bg-surface dark:border-white/10 dark:hover:bg-dark-surface"><i data-dir-icon data-lucide="arrow-left-right" class="h-4 w-4"></i>Direction</button>
+      </div>
+      <div class="flex items-center gap-3 rounded-xl border border-border p-3 dark:border-white/10">
+        <span data-profile-initials class="grid h-10 w-10 place-items-center rounded-full bg-primary/15 text-sm font-bold text-primary">AP</span>
+        <span class="min-w-0">
+          <span data-profile-name class="block truncate text-sm font-semibold text-heading dark:text-dark-text">Parent</span>
+          <span data-profile-role class="block text-xs">Parent</span>
+        </span>
+      </div>
+      <a href="../index.html" class="flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-surface dark:hover:bg-dark-surface"><i data-lucide="arrow-left" class="h-4 w-4"></i>Back to website</a>
+    </div>
+
+    <div class="mt-4 hidden border-t border-border pt-4 dark:border-white/10 xl:block">
+      <a href="../index.html" class="flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-surface dark:hover:bg-dark-surface"><i data-lucide="arrow-left" class="h-4 w-4"></i>Back to website</a>
+    </div>
+  </aside>
+
+  <!-- Main column -->
+  <div class="pt-16 xl:ms-72">
+    <main class="min-h-[calc(100vh-4rem)] space-y-6 p-4 sm:p-6 lg:p-8">
+      <!-- Overview -->
+      <section id="overview" class="dash-section space-y-5">
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h1 class="font-heading text-3xl text-heading dark:text-dark-text">Welcome back, <span id="welcome-name">Parent</span></h1>
+            <p class="text-sm">Here's a snapshot of your child's learning journey.</p>
+          </div>
+          <div class="text-sm text-body/80 dark:text-dark-muted" id="today-label"></div>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div class="card p-5"><div class="text-sm">Attendance</div><div class="mt-1 font-heading text-3xl text-primary" id="stat-attendance">96%</div><div class="text-xs">This term</div></div>
+          <div class="card p-5"><div class="text-sm">Activities Completed</div><div class="mt-1 font-heading text-3xl text-secondary" id="stat-activities">24</div><div class="text-xs">This month</div></div>
+          <div class="card p-5"><div class="text-sm">Pending Tuition</div><div class="mt-1 font-heading text-3xl text-heading dark:text-dark-text" id="stat-tuition">$180</div><div class="text-xs">Due this cycle</div></div>
+          <div class="card p-5"><div class="text-sm">Unread Notifications</div><div class="mt-1 font-heading text-3xl text-primary" id="stat-notifs">2</div><div class="text-xs">Updates for you</div></div>
+        </div>
+        <div class="grid gap-5 lg:grid-cols-3">
+          <div class="card p-5 lg:col-span-2">
+            <h2 class="font-heading text-xl text-heading dark:text-dark-text">Child Profile</h2>
+            <div class="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <img src="../images/dashboard/child-profile.jpg" alt="Child profile placeholder" class="h-24 w-24 rounded-2xl object-cover" />
+              <div class="grid flex-1 gap-2 text-sm sm:grid-cols-2">
+                <div><span class="block text-body/70 dark:text-dark-muted">Child Name</span><span class="font-semibold text-heading dark:text-dark-text" id="child-name">Aarav Mehta</span></div>
+                <div><span class="block text-body/70 dark:text-dark-muted">Current Program</span><span class="font-semibold">Primary Program (3 – 6 years)</span></div>
+                <div><span class="block text-body/70 dark:text-dark-muted">Assigned Teacher</span><span class="font-semibold">Ms. Elena Morris</span></div>
+                <div><span class="block text-body/70 dark:text-dark-muted">Enrollment</span><span class="font-semibold">Active since Aug 2025</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="card p-5">
+            <h2 class="font-heading text-xl text-heading dark:text-dark-text">Recent Notifications</h2>
+            <ul id="overview-notifs" class="mt-4 space-y-3 text-sm"></ul>
+          </div>
+        </div>
+        <div class="grid gap-5 lg:grid-cols-3">
+          <div class="card p-5 lg:col-span-2">
+            <div class="flex items-center justify-between">
+              <h2 class="font-heading text-xl text-heading dark:text-dark-text">Learning Focus This Week</h2>
+              <span class="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">Week 12</span>
+            </div>
+            <div class="mt-4 space-y-3 text-sm">
+              <div><div class="mb-1 flex justify-between"><span>Practical Life</span><span>85%</span></div><div class="h-2 rounded-full bg-surface dark:bg-dark-surface"><div class="h-2 rounded-full bg-primary" style="width:85%"></div></div></div>
+              <div><div class="mb-1 flex justify-between"><span>Language</span><span>72%</span></div><div class="h-2 rounded-full bg-surface dark:bg-dark-surface"><div class="h-2 rounded-full bg-primary" style="width:72%"></div></div></div>
+              <div><div class="mb-1 flex justify-between"><span>Mathematics</span><span>64%</span></div><div class="h-2 rounded-full bg-surface dark:bg-dark-surface"><div class="h-2 rounded-full bg-secondary" style="width:64%"></div></div></div>
+              <div><div class="mb-1 flex justify-between"><span>Sensorial</span><span>78%</span></div><div class="h-2 rounded-full bg-surface dark:bg-dark-surface"><div class="h-2 rounded-full bg-primary" style="width:78%"></div></div></div>
+              <div><div class="mb-1 flex justify-between"><span>Outdoor Activities</span><span>90%</span></div><div class="h-2 rounded-full bg-surface dark:bg-dark-surface"><div class="h-2 rounded-full bg-secondary" style="width:90%"></div></div></div>
+            </div>
+          </div>
+          <div class="card p-5">
+            <h2 class="font-heading text-xl text-heading dark:text-dark-text">Quick Actions</h2>
+            <div class="mt-4 grid gap-2 text-sm">
+              <a href="#logs" data-dash-goto="#logs" class="flex items-center justify-between rounded-xl border border-border px-3 py-2.5 hover:bg-surface dark:border-white/10 dark:hover:bg-dark-surface"><span class="inline-flex items-center gap-2"><i data-lucide="notebook-text" class="h-4 w-4 text-primary"></i>Today's learning log</span><i data-lucide="chevron-right" class="h-4 w-4"></i></a>
+              <a href="#reports" data-dash-goto="#reports" class="flex items-center justify-between rounded-xl border border-border px-3 py-2.5 hover:bg-surface dark:border-white/10 dark:hover:bg-dark-surface"><span class="inline-flex items-center gap-2"><i data-lucide="file-text" class="h-4 w-4 text-primary"></i>View teacher report</span><i data-lucide="chevron-right" class="h-4 w-4"></i></a>
+              <a href="#tuition" data-dash-goto="#tuition" class="flex items-center justify-between rounded-xl border border-border px-3 py-2.5 hover:bg-surface dark:border-white/10 dark:hover:bg-dark-surface"><span class="inline-flex items-center gap-2"><i data-lucide="wallet" class="h-4 w-4 text-primary"></i>Pay tuition</span><i data-lucide="chevron-right" class="h-4 w-4"></i></a>
+              <a href="#notifications" data-dash-goto="#notifications" class="flex items-center justify-between rounded-xl border border-border px-3 py-2.5 hover:bg-surface dark:border-white/10 dark:hover:bg-dark-surface"><span class="inline-flex items-center gap-2"><i data-lucide="bell" class="h-4 w-4 text-primary"></i>Check notifications</span><i data-lucide="chevron-right" class="h-4 w-4"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="grid gap-5 lg:grid-cols-2">
+          <div class="card p-5">
+            <h2 class="font-heading text-xl text-heading dark:text-dark-text">Upcoming Events</h2>
+            <ul class="mt-4 space-y-3 text-sm">
+              <li class="flex gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-xs font-bold text-primary">APR<br>05</span><span><span class="block font-medium text-heading dark:text-dark-text">Parent–Teacher Conference</span><span class="block text-xs">4:00 PM – 5:00 PM · Ms. Elena Morris</span></span></li>
+              <li class="flex gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-secondary/10 text-xs font-bold text-secondary">APR<br>12</span><span><span class="block font-medium text-heading dark:text-dark-text">Spring Learning Showcase</span><span class="block text-xs">10:00 AM · Main classroom</span></span></li>
+              <li class="flex gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-accent/40 text-xs font-bold text-heading">APR<br>18</span><span><span class="block font-medium text-heading dark:text-dark-text">Nature Walk Field Trip</span><span class="block text-xs">9:00 AM – 12:00 PM · Consent form due Apr 15</span></span></li>
+            </ul>
+          </div>
+          <div class="card p-5">
+            <h2 class="font-heading text-xl text-heading dark:text-dark-text">Teacher's Note</h2>
+            <p class="mt-3 text-sm">Aarav has shown wonderful focus during the practical life work cycle this week. He independently prepared snack and helped a younger friend with the pouring activity.</p>
+            <div class="mt-4 flex items-center gap-3">
+              <span class="grid h-10 w-10 place-items-center rounded-full bg-secondary/15 text-xs font-bold text-secondary">EM</span>
+              <span><span class="block text-sm font-semibold text-heading dark:text-dark-text">Ms. Elena Morris</span><span class="block text-xs">Lead Guide, Primary Program</span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- My Child -->
+      <section id="child" class="dash-section hidden space-y-5">
+        <div>
+          <h2 class="font-heading text-2xl text-heading dark:text-dark-text">My Child</h2>
+          <p class="text-sm">Profile, health information, and development at a glance.</p>
+        </div>
+        <div class="card p-6 grid gap-6 md:grid-cols-[140px,1fr] items-start">
+          <img src="../images/dashboard/child-profile.jpg" alt="Child photo placeholder" class="h-32 w-32 rounded-2xl object-cover" />
+          <div class="grid gap-3 text-sm sm:grid-cols-2">
+            <div><span class="block text-body/70 dark:text-dark-muted">Child Name</span><span class="font-semibold text-heading dark:text-dark-text">Aarav Mehta</span></div>
+            <div><span class="block text-body/70 dark:text-dark-muted">Age</span><span class="font-semibold">4 years</span></div>
+            <div><span class="block text-body/70 dark:text-dark-muted">Program</span><span class="font-semibold">Primary Program (3 – 6 years)</span></div>
+            <div><span class="block text-body/70 dark:text-dark-muted">Assigned Teacher</span><span class="font-semibold">Ms. Elena Morris</span></div>
+            <div class="sm:col-span-2"><span class="block text-body/70 dark:text-dark-muted">Enrollment Information</span><span class="font-semibold">Enrolled: August 2025 · Schedule: Mon–Fri, 8:30 AM – 2:30 PM · Status: Active</span></div>
+            <div class="sm:col-span-2"><span class="block text-body/70 dark:text-dark-muted">Interests</span><span>Practical life, building with blocks, nature walks, and picture books.</span></div>
+          </div>
+        </div>
+        <div class="grid gap-5 lg:grid-cols-2">
+          <div class="card p-5">
+            <h3 class="font-heading text-xl text-heading dark:text-dark-text">Emergency &amp; Medical</h3>
+            <dl class="mt-4 grid gap-3 text-sm sm:grid-cols-2">
+              <div><dt class="text-body/70 dark:text-dark-muted">Primary Contact</dt><dd class="font-semibold">Riya Mehta</dd></div>
+              <div><dt class="text-body/70 dark:text-dark-muted">Phone</dt><dd class="font-semibold">+1 (555) 010-2451</dd></div>
+              <div><dt class="text-body/70 dark:text-dark-muted">Emergency Contact</dt><dd class="font-semibold">Arjun Mehta · +1 (555) 010-3388</dd></div>
+              <div><dt class="text-body/70 dark:text-dark-muted">Pediatrician</dt><dd class="font-semibold">Dr. Sarah Patel</dd></div>
+              <div class="sm:col-span-2"><dt class="text-body/70 dark:text-dark-muted">Allergies / Medical Notes</dt><dd class="font-semibold">Mild peanut sensitivity · Inhaler kept in classroom cubby</dd></div>
+            </dl>
+          </div>
+          <div class="card p-5">
+            <h3 class="font-heading text-xl text-heading dark:text-dark-text">Developmental Milestones</h3>
+            <div class="mt-4 space-y-3 text-sm">
+              <div><div class="mb-1 flex justify-between"><span>Independence &amp; self-care</span><span>Strong</span></div><div class="h-2 rounded-full bg-surface dark:bg-dark-surface"><div class="h-2 rounded-full bg-primary" style="width:88%"></div></div></div>
+              <div><div class="mb-1 flex justify-between"><span>Language &amp; vocabulary</span><span>Growing</span></div><div class="h-2 rounded-full bg-surface dark:bg-dark-surface"><div class="h-2 rounded-full bg-primary" style="width:74%"></div></div></div>
+              <div><div class="mb-1 flex justify-between"><span>Fine motor control</span><span>Growing</span></div><div class="h-2 rounded-full bg-surface dark:bg-dark-surface"><div class="h-2 rounded-full bg-secondary" style="width:70%"></div></div></div>
+              <div><div class="mb-1 flex justify-between"><span>Social cooperation</span><span>Strong</span></div><div class="h-2 rounded-full bg-surface dark:bg-dark-surface"><div class="h-2 rounded-full bg-primary" style="width:92%"></div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card p-5">
+          <h3 class="font-heading text-xl text-heading dark:text-dark-text">Daily Routine</h3>
+          <div class="mt-4 grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-5">
+            <div class="rounded-xl border border-border p-3 dark:border-white/10"><span class="block text-xs font-semibold text-primary">8:30 AM</span><span class="mt-1 block font-medium text-heading dark:text-dark-text">Arrival &amp; free play</span></div>
+            <div class="rounded-xl border border-border p-3 dark:border-white/10"><span class="block text-xs font-semibold text-primary">10:00 AM</span><span class="mt-1 block font-medium text-heading dark:text-dark-text">Circle time</span></div>
+            <div class="rounded-xl border border-border p-3 dark:border-white/10"><span class="block text-xs font-semibold text-primary">11:00 AM</span><span class="mt-1 block font-medium text-heading dark:text-dark-text">Montessori work cycle</span></div>
+            <div class="rounded-xl border border-border p-3 dark:border-white/10"><span class="block text-xs font-semibold text-primary">1:00 PM</span><span class="mt-1 block font-medium text-heading dark:text-dark-text">Outdoor exploration</span></div>
+            <div class="rounded-xl border border-border p-3 dark:border-white/10"><span class="block text-xs font-semibold text-primary">2:00 PM</span><span class="mt-1 block font-medium text-heading dark:text-dark-text">Story &amp; reflection</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Logs -->
+      <section id="logs" class="dash-section hidden space-y-5">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div><h2 class="font-heading text-2xl text-heading dark:text-dark-text">Daily Learning Logs</h2><p class="text-sm">Filter by date or Montessori learning area.</p></div>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div class="card p-4"><div class="text-sm">Activities This Week</div><div class="mt-1 font-heading text-2xl text-primary">12</div></div>
+          <div class="card p-4"><div class="text-sm">Learning Areas Covered</div><div class="mt-1 font-heading text-2xl text-heading dark:text-dark-text">5</div></div>
+          <div class="card p-4"><div class="text-sm">Focus Minutes</div><div class="mt-1 font-heading text-2xl text-secondary">240</div></div>
+          <div class="card p-4"><div class="text-sm">Photos &amp; Notes</div><div class="mt-1 font-heading text-2xl text-heading dark:text-dark-text">8</div></div>
+        </div>
+        <div class="card p-4">
+          <div class="grid gap-3 sm:grid-cols-3">
+            <div><label class="mb-1 block text-sm font-medium">Date</label><input id="log-date" type="date" class="w-full rounded-xl border border-border bg-bg px-3 py-2 dark:border-white/10 dark:bg-dark-bg" /></div>
+            <div><label class="mb-1 block text-sm font-medium">Learning Area</label>
+              <select id="log-area" class="w-full rounded-xl border border-border bg-bg px-3 py-2 dark:border-white/10 dark:bg-dark-bg">
+                <option value="">All Areas</option>
+                <option>Practical Life</option><option>Sensorial</option><option>Language</option><option>Mathematics</option><option>Outdoor Activities</option>
+              </select>
+            </div>
+            <div class="flex items-end"><button id="log-reset" class="btn-secondary w-full">Reset Filters</button></div>
+          </div>
+        </div>
+        <div id="logs-list" class="grid gap-4 md:grid-cols-2"></div>
+        <div class="card p-5">
+          <h3 class="font-heading text-xl text-heading dark:text-dark-text">Montessori Learning Areas</h3>
+          <div class="mt-4 grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-5">
+            <div class="rounded-xl border border-border p-3 dark:border-white/10"><i data-lucide="sparkles" class="h-4 w-4 text-primary"></i><span class="mt-2 block font-medium text-heading dark:text-dark-text">Practical Life</span><span class="mt-1 block text-xs">Everyday skills and independence.</span></div>
+            <div class="rounded-xl border border-border p-3 dark:border-white/10"><i data-lucide="hand" class="h-4 w-4 text-primary"></i><span class="mt-2 block font-medium text-heading dark:text-dark-text">Sensorial</span><span class="mt-1 block text-xs">Exploring through the senses.</span></div>
+            <div class="rounded-xl border border-border p-3 dark:border-white/10"><i data-lucide="book-open" class="h-4 w-4 text-primary"></i><span class="mt-2 block font-medium text-heading dark:text-dark-text">Language</span><span class="mt-1 block text-xs">Stories, sounds, and expression.</span></div>
+            <div class="rounded-xl border border-border p-3 dark:border-white/10"><i data-lucide="calculator" class="h-4 w-4 text-primary"></i><span class="mt-2 block font-medium text-heading dark:text-dark-text">Mathematics</span><span class="mt-1 block text-xs">Numbers, patterns, and order.</span></div>
+            <div class="rounded-xl border border-border p-3 dark:border-white/10"><i data-lucide="trees" class="h-4 w-4 text-primary"></i><span class="mt-2 block font-medium text-heading dark:text-dark-text">Outdoor</span><span class="mt-1 block text-xs">Nature, movement, and discovery.</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reports -->
+      <section id="reports" class="dash-section hidden space-y-5">
+        <div>
+          <h2 class="font-heading text-2xl text-heading dark:text-dark-text">Teacher Reports</h2>
+          <p class="text-sm">Progress reports prepared by your child's guide.</p>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-3">
+          <div class="card p-4"><div class="text-sm">Latest Report</div><div class="mt-1 font-heading text-2xl text-primary">Mar 15</div><div class="text-xs">March 2026</div></div>
+          <div class="card p-4"><div class="text-sm">Overall Progress</div><div class="mt-1 font-heading text-2xl text-heading dark:text-dark-text">On track</div><div class="text-xs">Across all areas</div></div>
+          <div class="card p-4"><div class="text-sm">Reports This Term</div><div class="mt-1 font-heading text-2xl text-secondary">3</div><div class="text-xs">2 available to view</div></div>
+        </div>
+        <div class="card p-5">
+          <h3 class="font-heading text-xl text-heading dark:text-dark-text">Progress Snapshot</h3>
+          <div class="mt-4 grid gap-3 text-sm sm:grid-cols-2">
+            <div><div class="mb-1 flex justify-between"><span>Concentration &amp; focus</span><span>Strong</span></div><div class="h-2 rounded-full bg-surface dark:bg-dark-surface"><div class="h-2 rounded-full bg-primary" style="width:90%"></div></div></div>
+            <div><div class="mb-1 flex justify-between"><span>Fine motor skills</span><span>Growing</span></div><div class="h-2 rounded-full bg-surface dark:bg-dark-surface"><div class="h-2 rounded-full bg-primary" style="width:76%"></div></div></div>
+            <div><div class="mb-1 flex justify-between"><span>Language confidence</span><span>Growing</span></div><div class="h-2 rounded-full bg-surface dark:bg-dark-surface"><div class="h-2 rounded-full bg-secondary" style="width:72%"></div></div></div>
+            <div><div class="mb-1 flex justify-between"><span>Peer collaboration</span><span>Strong</span></div><div class="h-2 rounded-full bg-surface dark:bg-dark-surface"><div class="h-2 rounded-full bg-primary" style="width:94%"></div></div></div>
+          </div>
+        </div>
+        <div id="reports-list" class="grid gap-4 md:grid-cols-2"></div>
+      </section>
+
+      <!-- Attendance -->
+      <section id="attendance" class="dash-section hidden space-y-5">
+        <div>
+          <h2 class="font-heading text-2xl text-heading dark:text-dark-text">Attendance</h2>
+          <p class="text-sm">Attendance summary and recent daily records.</p>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-3">
+          <div class="card p-5"><div class="text-sm">Attendance Rate</div><div class="mt-1 font-heading text-3xl text-primary">96%</div></div>
+          <div class="card p-5"><div class="text-sm">Days Present</div><div class="mt-1 font-heading text-3xl text-heading dark:text-dark-text">48</div></div>
+          <div class="card p-5"><div class="text-sm">Days Absent</div><div class="mt-1 font-heading text-3xl text-secondary">2</div></div>
+        </div>
+        <div class="grid gap-5 lg:grid-cols-3">
+          <div class="card p-5 lg:col-span-2">
+            <h3 class="font-semibold text-heading dark:text-dark-text">Recent Attendance</h3>
+            <div class="mt-3 overflow-x-auto">
+              <table class="responsive-table w-full min-w-[520px] text-sm"><thead class="text-start text-body/70 dark:text-dark-muted"><tr><th class="py-2 text-start">Date</th><th class="py-2 text-start">Status</th><th class="py-2 text-start">Note</th></tr></thead>
+              <tbody class="divide-y divide-border dark:divide-white/10">
+                <tr><td class="py-2">2026-03-20</td><td class="py-2"><span class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-800 dark:bg-green-500/20 dark:text-green-200">Present</span></td><td class="py-2">On time</td></tr>
+                <tr><td class="py-2">2026-03-19</td><td class="py-2"><span class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-800 dark:bg-green-500/20 dark:text-green-200">Present</span></td><td class="py-2">Participated in outdoor exploration</td></tr>
+                <tr><td class="py-2">2026-03-18</td><td class="py-2"><span class="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:bg-amber-500/20 dark:text-amber-200">Late</span></td><td class="py-2">Arrived 10 minutes late</td></tr>
+                <tr><td class="py-2">2026-03-17</td><td class="py-2"><span class="rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-800 dark:bg-green-500/20 dark:text-green-200">Present</span></td><td class="py-2">—</td></tr>
+              </tbody></table>
+            </div>
+          </div>
+          <div class="card p-5">
+            <h3 class="font-semibold text-heading dark:text-dark-text">Attendance Notes</h3>
+            <ul class="mt-3 space-y-3 text-sm">
+              <li class="flex gap-2"><span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-primary"></span><span>Punctuality is strong this month — 18 of 20 arrivals on time.</span></li>
+              <li class="flex gap-2"><span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-secondary"></span><span>Both absences were notified in advance due to a minor cold.</span></li>
+              <li class="flex gap-2"><span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-primary"></span><span>Make-up learning notes were shared for missed activity days.</span></li>
+            </ul>
+            <div class="mt-4 rounded-xl bg-surface p-3 text-xs dark:bg-dark-surface">Attendance data is demo content. Connect a secure backend for live records.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tuition -->
+      <section id="tuition" class="dash-section hidden space-y-5">
+        <div>
+          <h2 class="font-heading text-2xl text-heading dark:text-dark-text">Tuition &amp; Payments</h2>
+          <p class="text-sm">Payment schedule, methods, and history.</p>
+        </div>
+        <div class="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-100">Payment actions are simulated for this demo. No real payment is processed. Integrate a secure payment gateway and backend for production.</div>
+        <div class="grid gap-4 sm:grid-cols-3">
+          <div class="card p-5"><div class="text-sm">Next Payment</div><div class="mt-1 font-heading text-2xl text-heading dark:text-dark-text">$450.00</div><div class="text-xs">Due April 5, 2026</div></div>
+          <div class="card p-5"><div class="text-sm">Payment Method</div><div class="mt-1 flex items-center gap-2 font-semibold text-heading dark:text-dark-text"><i data-lucide="credit-card" class="h-5 w-5 text-primary"></i>Visa •••• 4242</div><div class="text-xs">Demo card · expires 09/28</div></div>
+          <div class="card p-5"><div class="text-sm">Billing Contact</div><div class="mt-1 font-semibold text-heading dark:text-dark-text">Riya Mehta</div><div class="text-xs">billing@example.com</div></div>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4" id="tuition-stats"></div>
+        <div class="card p-5">
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <h3 class="font-semibold text-heading dark:text-dark-text">Payment History</h3>
+            <button id="pay-btn" class="btn-primary">Pay Tuition (Demo)</button>
+          </div>
+          <div class="mt-4 overflow-x-auto">
+            <table class="responsive-table w-full min-w-[640px] text-sm">
+              <thead class="text-body/70 dark:text-dark-muted"><tr><th class="py-2 text-start">Month</th><th class="py-2 text-start">Amount</th><th class="py-2 text-start">Due Date</th><th class="py-2 text-start">Status</th><th class="py-2 text-start">Paid On</th></tr></thead>
+              <tbody id="payment-history" class="divide-y divide-border dark:divide-white/10"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Notifications -->
+      <section id="notifications" class="dash-section hidden space-y-5">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div><h2 class="font-heading text-2xl text-heading dark:text-dark-text">Notifications &amp; Updates</h2><p class="text-sm">School announcements, teacher notes, and reminders.</p></div>
+          <button id="mark-all-read" class="btn-secondary">Mark all as read</button>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-3">
+          <div class="card p-4"><div class="text-sm">Unread</div><div class="mt-1 font-heading text-2xl text-secondary">2</div></div>
+          <div class="card p-4"><div class="text-sm">This Week</div><div class="mt-1 font-heading text-2xl text-heading dark:text-dark-text">5</div></div>
+          <div class="card p-4"><div class="text-sm">Delivery</div><div class="mt-1 font-heading text-2xl text-primary">Instant</div></div>
+        </div>
+        <div id="notifications-list" class="space-y-3"></div>
+        <div class="card p-5">
+          <h3 class="font-heading text-xl text-heading dark:text-dark-text">Notification Preferences</h3>
+          <div class="mt-4 grid gap-3 text-sm sm:grid-cols-2">
+            <label class="flex items-center gap-2 rounded-xl border border-border p-3 dark:border-white/10"><input type="checkbox" checked class="rounded border-border text-primary focus:ring-primary" /> Daily learning log updates</label>
+            <label class="flex items-center gap-2 rounded-xl border border-border p-3 dark:border-white/10"><input type="checkbox" checked class="rounded border-border text-primary focus:ring-primary" /> Teacher reports and notes</label>
+            <label class="flex items-center gap-2 rounded-xl border border-border p-3 dark:border-white/10"><input type="checkbox" checked class="rounded border-border text-primary focus:ring-primary" /> Tuition and payment reminders</label>
+            <label class="flex items-center gap-2 rounded-xl border border-border p-3 dark:border-white/10"><input type="checkbox" class="rounded border-border text-primary focus:ring-primary" /> School event announcements</label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings -->
+      <section id="settings" class="dash-section hidden space-y-5">
+        <div>
+          <h2 class="font-heading text-2xl text-heading dark:text-dark-text">Settings</h2>
+          <p class="text-sm">Appearance, account, and demo data controls.</p>
+        </div>
+        <div class="grid gap-5 lg:grid-cols-2">
+          <div class="card p-6 space-y-4">
+            <h3 class="font-heading text-xl text-heading dark:text-dark-text">Appearance</h3>
+            <p class="text-sm">Theme and direction preferences are stored in LocalStorage and apply across all pages.</p>
+            <div class="flex flex-wrap gap-3">
+              <button id="settings-theme" class="btn-secondary"><i data-theme-icon data-lucide="sun" class="h-4 w-4"></i> Toggle Theme</button>
+              <button id="settings-rtl" class="btn-secondary"><i data-dir-icon data-lucide="languages" class="h-4 w-4"></i> Toggle Direction</button>
+            </div>
+          </div>
+          <div class="card p-6 space-y-4">
+            <h3 class="font-heading text-xl text-heading dark:text-dark-text">Account (Demo)</h3>
+            <div class="rounded-xl border border-border p-4 text-sm dark:border-white/10">
+              <p class="font-semibold text-heading dark:text-dark-text">Signed in as</p>
+              <p class="mt-1" id="settings-email">parent@littleroots.demo</p>
+              <p class="mt-2 text-xs">Profile editing and password changes require a real backend.</p>
+            </div>
+            <div class="grid gap-3 text-sm sm:grid-cols-2">
+              <div><span class="block text-body/70 dark:text-dark-muted">Name</span><span class="font-semibold" data-profile-name>Parent</span></div>
+              <div><span class="block text-body/70 dark:text-dark-muted">Role</span><span class="font-semibold" data-profile-role>Parent</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card max-w-2xl space-y-3 border-red-200 p-6 dark:border-red-500/30">
+          <h3 class="font-heading text-xl text-red-700 dark:text-red-300">Reset demo data</h3>
+          <p class="text-sm">Clear locally stored demo logs, reports, payments, and notifications. Theme and direction preferences are kept.</p>
+          <button type="button" data-dash-reset class="btn-secondary w-fit"><i data-lucide="rotate-ccw" class="h-4 w-4"></i> Reset LocalStorage demo data</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Report Modal -->
+  <div id="report-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 p-4">
+    <div class="card max-h-[85vh] w-full max-w-2xl overflow-y-auto p-6">
+      <div class="flex items-start justify-between gap-4">
+        <div><h3 id="modal-title" class="font-heading text-2xl text-heading dark:text-dark-text">Teacher Report</h3><p id="modal-meta" class="text-sm"></p></div>
+        <button id="modal-close" class="rounded-lg p-2 hover:bg-surface dark:hover:bg-dark-surface" aria-label="Close"><i data-lucide="x" class="h-5 w-5"></i></button>
+      </div>
+      <div id="modal-body" class="mt-4 space-y-3 text-sm"></div>
+    </div>
+  </div>
+
+  <script src="../js/theme.js"></script><script src="../js/rtl.js"></script><script src="../js/main.js"></script><script src="../js/auth.js"></script><script src="../js/dashboard-shell.js"></script><script src="../js/parent-dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --lr-bg: 251 248 241;
+    --lr-surface: 241 235 221;
+    --lr-heading: 52 72 58;
+    --lr-body: 110 104 91;
+    --lr-border: 229 222 208;
+  }
+  .dark {
+    color-scheme: dark;
+    --lr-bg: 32 43 37;
+    --lr-surface: 53 68 58;
+    --lr-heading: 248 244 233;
+    --lr-body: 198 201 188;
+    --lr-border: 90 105 94;
+  }
+  html { scroll-behavior: smooth; }
+}
+
+@layer components {
+  .btn-primary { @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full bg-primary px-5 py-2.5 font-semibold text-white transition hover:bg-[#67856a] focus:outline-none focus:ring-2 focus:ring-primary/40 dark:text-dark-bg; }
+  .btn-secondary { @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border border-primary/30 bg-white/70 px-5 py-2.5 font-semibold text-heading transition hover:bg-surface focus:outline-none focus:ring-2 focus:ring-primary/30 dark:border-white/20 dark:bg-dark-card dark:text-dark-text dark:hover:bg-dark-surface; }
+  .card { @apply rounded-2xl border border-border bg-white/80 shadow-soft backdrop-blur-sm dark:border-white/10 dark:bg-dark-card/90; }
+  .section { @apply py-16 md:py-20; }
+  .container-wrap { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+}
+
+/*
+ * Dark-mode contrast fixes for the accent colours.
+ * primary/secondary stay saturated so white text and tinted fills still work on
+ * light backgrounds; their text-only usages need a lighter tone on dark surfaces.
+ */
+.dark .text-primary,
+.dark .hover\:text-primary:hover { color: #A9C5A2; }
+.dark .text-secondary { color: #E9A987; }
+
+/* Saturated callouts keep their light-mode fill and dark text so headings,
+   labels and the white pill buttons inside them stay readable. */
+.dark .bg-primary { background-color: #78947A; color: #202B25; }
+.dark .bg-secondary { background-color: #C77D5B; color: #202B25; }
+.dark .bg-primary .text-heading { color: #202B25; }
+
+/* Buttons use a light sage fill with dark text for strong AA contrast. */
+.dark .btn-primary { background-color: #A9C5A2; color: #202B25; }
+
+/* A white pill inside a dark hero keeps dark text on white. */
+.dark .btn-primary.bg-white { background-color: #FFFFFF; color: #202B25; }
+
+/* Green callout cards become light sage so all copy inside stays readable. */
+.dark .card.bg-primary { background-color: #A9C5A2; color: #202B25; }
+.dark .card.bg-primary .text-white,
+.dark .card.bg-primary .text-white\/90 { color: #202B25; }
+
+/* Accent chips carry light heading text, so their fill must be deep in dark mode. */
+.dark .bg-accent\/40 { background-color: rgb(120 92 40 / 0.65); }
+.dark .bg-accent\/50 { background-color: rgb(120 92 40 / 0.7); }
+.dark .bg-accent\/60 { background-color: rgb(120 92 40 / 0.8); }
+
+/*
+ * Tablet/mobile tables become aligned label/value cards so wide admin tables
+ * never need horizontal scrolling. Labels are added from <th> text by
+ * js/dashboard-shell.js, including rows rendered later by the dashboard scripts.
+ */
+@media (max-width: 1023px) {
+  .responsive-table,
+  .responsive-table tbody,
+  .responsive-table tr,
+  .responsive-table td { display: block; width: 100%; min-width: 0; }
+  .responsive-table thead { display: none; }
+  .responsive-table tr {
+    margin-bottom: 0.75rem;
+    border: 1px solid rgb(var(--lr-border));
+    border-radius: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+  .responsive-table tr:last-child { margin-bottom: 0; }
+  .responsive-table td {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgb(var(--lr-border));
+    text-align: end;
+  }
+  .responsive-table td:last-child { border-bottom: 0; }
+  .responsive-table td::before {
+    content: attr(data-label);
+    flex: 0 0 40%;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgb(var(--lr-body));
+    text-align: start;
+  }
+}

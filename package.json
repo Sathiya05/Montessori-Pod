@@ -1,0 +1,13 @@
+{
+  "name": "little-roots-montessori",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Montessori-inspired learning pod website (HTML, Tailwind CSS, Vanilla JS)",
+  "scripts": {
+    "dev": "tailwindcss -i ./css/input.css -o ./css/style.css --watch",
+    "build": "tailwindcss -i ./css/input.css -o ./css/style.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

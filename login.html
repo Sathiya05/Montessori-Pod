@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parent Login | Little Roots Montessori</title>
+  <meta name="description" content="Login to the Little Roots Montessori parent or admin dashboard (frontend demo)." />
+  <link rel="icon" type="image/svg+xml" href="images/logo/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>(function(){try{var t=localStorage.getItem('lr-theme');var d=t||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');if(d==='dark')document.documentElement.classList.add('dark');document.documentElement.style.colorScheme=d;var dir=localStorage.getItem('lr-dir')||'ltr';document.documentElement.dir=dir;document.documentElement.lang=dir==='rtl'?'ar':'en';}catch(e){}})();</script>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-bg font-body text-body antialiased dark:bg-dark-bg dark:text-dark-text">
+  <!-- Page controls live in the top-right corner; no site navbar on this page. -->
+  <div class="fixed end-4 top-4 z-50 flex gap-2 sm:end-6 sm:top-6">
+    <button id="login-theme-toggle" class="rounded-full border border-border bg-bg/95 p-2 text-heading shadow-soft hover:bg-surface dark:border-white/10 dark:bg-dark-bg/95 dark:text-dark-text dark:hover:bg-dark-surface" aria-label="Toggle theme"><i data-theme-icon data-lucide="sun" class="h-5 w-5"></i></button>
+    <button id="login-rtl-toggle" class="rounded-full border border-border bg-bg/95 p-2 text-heading shadow-soft hover:bg-surface dark:border-white/10 dark:bg-dark-bg/95 dark:text-dark-text dark:hover:bg-dark-surface" aria-label="Toggle direction"><i data-dir-icon data-lucide="arrow-left-right" class="h-5 w-5"></i></button>
+  </div>
+  <main class="flex min-h-screen items-center py-10 sm:py-16">
+    <div class="container-wrap">
+      <div class="grid overflow-hidden rounded-[2rem] border border-border bg-white shadow-soft xl:grid-cols-2 dark:border-white/10 dark:bg-dark-card">
+        <!-- Left -->
+        <div class="relative hidden min-h-[520px] xl:block">
+          <img src="images/classroom/prepared-environment.jpg" alt="Prepared Montessori learning environment" class="absolute inset-0 h-full w-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#34483A]/85 via-[#34483A]/30 to-transparent"></div>
+          <div class="relative flex h-full flex-col justify-end p-10 text-white">
+            <h1 class="font-heading text-4xl">Welcome back to Little Roots</h1>
+            <p class="mt-3 max-w-md text-white/90">Stay connected with your child's learning journey, daily logs, teacher reports, and tuition information in one caring place.</p>
+          </div>
+        </div>
+        <!-- Right -->
+        <div class="p-6 sm:p-10 lg:p-12">
+          <div class="mb-6 flex flex-col items-center text-center">
+            <a href="index.html" class="inline-flex flex-wrap items-center justify-center gap-3" aria-label="Little Roots Montessori home">
+              <img src="images/logo/logo.svg" alt="Little Roots Montessori logo" class="h-14 w-14 rounded-2xl" />
+              <span class="leading-tight">
+                <span class="block font-heading text-2xl text-heading dark:text-dark-text">Montessori Pod</span>
+                <span class="block text-xs text-body dark:text-dark-muted">Growing Curious Minds</span>
+              </span>
+            </a>
+            <h1 class="mt-4 font-heading text-2xl text-heading dark:text-dark-text">Welcome back</h1>
+            <p class="mt-1 text-sm">Log in to access your dashboard.</p>
+          </div>
+          <div class="mx-auto max-w-md">
+         
+            <form id="login-form" class="mt-6 space-y-4" novalidate>
+              <div id="login-alert" class="hidden rounded-xl p-3 text-sm"></div>
+           
+              <div>
+                <label for="login-email" class="mb-1 block text-sm font-medium">Email address</label>
+                <input id="login-email" type="email" required class="w-full rounded-xl border border-border bg-bg px-4 py-2.5 dark:border-white/10 dark:bg-dark-bg" placeholder="you@example.com" />
+              </div>
+              <div>
+                <label for="login-password" class="mb-1 block text-sm font-medium">Password</label>
+                <div class="relative">
+                  <input id="login-password" type="password" required class="w-full rounded-xl border border-border bg-bg px-4 py-2.5 pe-11 dark:border-white/10 dark:bg-dark-bg" placeholder="Enter password" />
+                  <button type="button" id="toggle-password" class="absolute inset-y-0 end-0 flex items-center px-3 text-body/70 hover:text-primary" aria-label="Show password"><i data-lucide="eye" class="h-5 w-5"></i></button>
+                </div>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <label class="inline-flex items-center gap-2"><input id="remember" type="checkbox" class="rounded border-border text-primary focus:ring-primary" /> Remember me</label>
+                <button type="button" id="forgot-btn" class="text-primary hover:underline">Forgot password?</button>
+              </div>
+              <button type="submit" class="btn-primary w-full">Login</button>
+            </form>
+
+     
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="js/theme.js"></script><script src="js/rtl.js"></script><script src="js/main.js"></script><script src="js/auth.js"></script>
+  <script>
+    document.getElementById("login-theme-toggle").addEventListener("click", () => window.LRTheme && window.LRTheme.toggle());
+    document.getElementById("login-rtl-toggle").addEventListener("click", () => window.LRDir && window.LRDir.toggle());
+  </script>
+</body>
+</html>
